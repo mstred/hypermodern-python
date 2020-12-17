@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  poetry:
+    image: mstred/hypermodern-python:0.1.0
+    build: .
+    volumes:
+      - ${PWD}:/app
+    working_dir: /app
