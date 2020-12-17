@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   poetry:
-    image: mstred/hypermodern-python:0.1.0
+    image: docker.pkg.github.com/mstred/hypermodern-python/image
     build: .
     volumes:
       - ${PWD}:/app
