@@ -5,7 +5,9 @@ from requests import get
 
 from hypermodern import __version__ as version
 
+
 API_URL = "https://en.wikipedia.org/api/rest_v1/page/random/summary"
+
 
 @command()
 @version_option(version)
