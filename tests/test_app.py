@@ -1,23 +1,7 @@
-from click.testing import CliRunner
-from pytest import fixture
+from requests import RequestException
 
 from hypermodern import app
-
-
-@fixture
-def runner():
-    return CliRunner()
-
-
-@fixture
-def mock_requests_get(mocker):
-    mock = mocker.patch("hypermodern.app.get")
-    mock.return_value.__enter__.return_value.json.return_value = {
-        "title": "title",
-        "extract": "extract"
-    }
-
-    return mock
+from hypermodern.wikipedia import get_random_page
 
 
 def test_main_pass(runner, mock_requests_get):
@@ -44,4 +28,17 @@ def test_main_request_failed(runner, mock_requests_get):
     mock_requests_get.side_effect = Exception()
     result = runner.invoke(app.main)
     assert result.exit_code != 0
+
+
+def test_main_prints_on_failed_request(runner, mock_requests_get):
+    mock_requests_get.side_effect = RequestException()
+    result = runner.invoke(app.main)
+    print(result.output)
+    assert "Error" in result.output
+
+
+def test_main_with_specific_language(runner, mock_get_random_page):
+    language = "pt"
+    runner.invoke(app.main, [f"--language={language}"])
+    assert mock_get_random_page.called_with(language=language)
 
