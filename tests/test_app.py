@@ -1,21 +1,28 @@
+from pytest import mark
 from requests import RequestException
 
 from hypermodern import app
 from hypermodern.wikipedia import get_random_page
 
 
-def test_main_pass(runner, mock_requests_get):
+@mark.e2e
+def test_main_pass(runner):
+    result = runner.invoke(app.main)
+    assert result.exit_code == 0
+
+
+def test_main_pass_mocked(runner, mock_requests_get):
     result = runner.invoke(app.main)
     assert result.exit_code == 0
 
 
 def test_main_requests_get_is_called(runner, mock_requests_get):
-    result = runner.invoke(app.main)
+    runner.invoke(app.main)
     assert mock_requests_get.called
 
 
 def test_main_requests_wikipedia_api(runner, mock_requests_get):
-    result = runner.invoke(app.main)
+    runner.invoke(app.main)
     assert "en.wikipedia.org/api" in str(mock_requests_get.call_args.args)
 
 

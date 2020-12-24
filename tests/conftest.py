@@ -22,3 +22,7 @@ def mock_requests_get(mocker):
 def mock_get_random_page(mocker):
     return mocker.patch("hypermodern.wikipedia.get_random_page")
 
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "e2e: mark as end-to-end test")
+
