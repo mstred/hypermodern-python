@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hypermodern"
-version = "0.2.0"
+version = "0.3.0"
 description = ""
 authors = ["Edson Samuel Jr <samuedson@gmail.com>"]
 repository = "https://github.com/mstred/hypermodern-python"
@@ -11,9 +11,25 @@ click = "^7.1.2"
 requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
+coverage = {extras = ["toml"], version = "^5.3"}
+nox = "^2020.8.22"
+pytest = "^6.2.1"
+pytest-cov = "^2.10.1"
+pytest-mock = "^3.4.0"
 
 [tool.poetry.scripts]
 app = "hypermodern.app:main"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["hypermodern"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
